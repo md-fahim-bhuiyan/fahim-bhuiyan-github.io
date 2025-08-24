@@ -30,7 +30,17 @@
   --breakpoint-lg: 992px;
   --breakpoint-xl: 1200px;
   --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
-  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+  --font-family-monospace: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; 
+  --card-bg: #0f1220;
+  --card-border: rgba(255,255,255,.08);
+  --text-muted: rgba(255,255,255,.7);
+  --pill-bg: rgba(255,255,255,.08);
+  --pill-text: rgba(255,255,255,.85);
+  --accent: #7c6cff;
+  --accent-2: #22d3ee;
+
+
+}
 
 *,
 *::before,
@@ -74,7 +84,7 @@ p {
   margin-bottom: 1rem; }
 
 address {
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   font-style: normal;
   line-height: inherit; }
 
@@ -271,7 +281,7 @@ template {
 
 h1, h2, h3, h4, h5, h6,
 .h1, .h2, .h3, .h4, .h5, .h6 {
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   font-weight: 500;
   line-height: 1.2; }
 
@@ -295,7 +305,7 @@ h6, .h6 {
 
 hr {
   margin-top: 1rem;
-  margin-bottom: 1rem;
+  /* margin-bottom: 1rem; */
   border: 0;
   border-top: 1px solid rgba(0, 0, 0, 0.1); }
 
@@ -336,6 +346,100 @@ pre {
     color: inherit;
     word-break: normal; }
 
+/* Section layout */
+#live-projects{
+  background: radial-gradient(1200px 400px at 10% -10%, rgba(124,108,255,.15), transparent),
+              radial-gradient(800px 300px at 90% 0%, rgba(34,211,238,.12), transparent),
+              #1b223b;
+  color: #fff;
+  padding: 64px 15px; 
+
+}
+
+#live-projects .section-head{
+  text-align:center;
+  margin-bottom: 24px;
+}
+#live-projects .section-head h2{
+  font-size: clamp(24px, 3vw, 40px);
+  margin: 0 0 8px;
+
+}
+#live-projects .section-head p{
+  margin: 0 auto;
+  max-width: 720px;
+  color: var(--text-muted);
+  font-size: clamp(14px, 1.6vw, 16px);
+}
+
+/* Projects row - show all 5 cards in one line if space */
+.projects-strip{
+  display: flex;
+  flex-wrap: wrap;   /* wrap on smaller screens */
+  gap: 16px;
+  justify-content: space-between; /* spread evenly */
+}
+
+/* Project card */
+.project-card{
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  padding: 18px;
+  flex: 1 1 calc(20% - 12.8px); /* 5 cards in a row with gap 16px */
+  box-shadow: 0 10px 20px rgba(0,0,0,.25);
+  position: relative;
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+  min-width: 250px; /* avoid too small on tiny screens */
+}
+.project-card:hover{
+  transform: translateY(-4px);
+  border-color: rgba(124,108,255,.35);
+  box-shadow: 0 16px 28px rgba(0,0,0,.35);
+}
+
+/* Icon bubble */
+.icon-bubble{
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: grid; place-items: center;
+  background: linear-gradient(135deg, rgba(124,108,255,.25), rgba(34,211,238,.25));
+  border: 1px solid var(--card-border);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04);
+}
+.icon-bubble i{ font-size: 22px; }
+
+.project-top{ display:flex; align-items:center; gap: 14px; margin-bottom: 10px; }
+.project-title{ font-weight: 700; font-size: 18px; margin:0; }
+.project-desc{ color: var(--text-muted); font-size: 14px; margin: 6px 0 12px; }
+
+/* Tech pills */
+.pills{ display:flex; gap:8px; flex-wrap: wrap; margin-bottom: 12px; }
+.pill{
+  font-size: 12px; padding: 6px 10px; border-radius: 999px;
+  background: var(--pill-bg); color: var(--pill-text); border: 1px solid var(--card-border);
+}
+
+/* Actions */
+.actions{ display:flex; gap:10px; flex-wrap: wrap; }
+.btn-action{
+  appearance: none; border: 1px solid var(--card-border);
+  background: #0b0e1a; color: #fff; font-weight: 600;
+  padding: 8px 12px; border-radius: 12px; cursor: pointer; text-decoration:none;
+  display:inline-flex; align-items:center; gap:8px; font-size: 14px;
+  transition: background .2s ease, border-color .2s ease;
+}
+.btn-action:hover{ border-color: rgba(124,108,255,.5); background: #0d1120; }
+.btn-live{ border-color: rgba(124,108,255,.5); box-shadow: 0 0 0 2px rgba(124,108,255,.15) inset; }
+
+/* Glow line */
+
+
+/* Responsive tweaks */
+@media (max-width: 1200px){ .project-card{ flex:1 1 calc(33.33% - 10.6px); } } /* 3 in row */
+@media (max-width: 992px){ .project-card{ flex:1 1 calc(50% - 8px); } } /* 2 in row */
+@media (max-width: 576px){ .project-card{ flex:1 1 100%; } } /* 1 in row on mobile */
+    
 .container {
   width: 100%;
   padding-right: 15px;
