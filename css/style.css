@@ -420,6 +420,56 @@ pre {
   background: var(--pill-bg); color: var(--pill-text); border: 1px solid var(--card-border);
 }
 
+.dev-cards-wrapper {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+    backgroynd : #0f172a;
+  }
+  .card-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .profile-card {
+    width: 90%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #0f172a;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.22);
+    text-align: center;
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    cursor: pointer;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  .profile-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+  }
+  .profile-card h2 {
+    font-size: 20px;
+    margin: 0 0 10px 0;
+  }
+  .profile-card p { margin: 6px 0; font-size: 14px; }
+  .profile-card hr { border:0; border-top:1px solid rgba(255,255,255,0.12); margin:10px 0; }
+
+  /* small responsive tweaks */
+  @media (min-width: 960px) {
+    .profile-card { max-width: 320px; }
+  }
+  @media (max-width: 720px) {
+    .card-container { gap: 12px; }
+    .profile-card { max-width: 92%; }
+  }
+
 /* Actions */
 .actions{ display:flex; gap:10px; flex-wrap: wrap; }
 .btn-action{

@@ -130,6 +130,154 @@
       </div>
     </div>
   </section>
+
+  
+
+
+<style>
+  .dev-cards-wrapper {
+    padding: 20px 0;
+    display: flex;
+    justify-content: center;
+
+  }
+  .card-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  .profile-card {
+    width: 90%;
+    max-width: 320px;
+    padding: 20px;
+    border-radius: 20px;
+    background: #0f172a;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    box-shadow: 0 8px 30px rgba(0,0,0,0.22);
+    text-align: center;
+    transition: transform 0.28s ease, box-shadow 0.28s ease;
+    cursor: pointer;
+    color: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+  }
+  .profile-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 14px 40px rgba(0,0,0,0.35);
+  }
+  .profile-card h2 {
+    font-size: 20px;
+    margin: 0 0 10px 0;
+  }
+  .profile-card p { margin: 6px 0; font-size: 14px; }
+  .profile-card hr { border:0; border-top:1px solid rgba(255,255,255,0.12); margin:10px 0; }
+
+  /* small responsive tweaks */
+  @media (min-width: 960px) {
+    .profile-card { max-width: 320px; }
+  }
+  @media (max-width: 720px) {
+    .card-container { gap: 12px; }
+    .profile-card { max-width: 92%; }
+  }
+</style>
+<h1 style="text-align:center; margin-top: 20px;">🚀 My Developer Footprint</h1>
+<div class="dev-cards-wrapper">
+  <div class="card-container">
+    <!-- LeetCode Card -->
+    <div class="profile-card" id="leetcode-card">
+      <h2 style="color: white;">⚡ LeetCode Profile</h2>
+      <p id="lc-username">Loading...</p>
+      <p id="lc-rank">Loading...</p>
+      <p id="lc-rating">Loading...</p>
+      <hr>
+      <p id="lc-total">Loading...</p>
+      <p id="lc-easy" style="color:#4caf50;">Loading...</p>
+      <p id="lc-medium" style="color:#ff9800;">Loading...</p>
+      <p id="lc-hard" style="color:#f44336;">Loading...</p>
+    </div>
+
+    <!-- GitHub Card -->
+    <div class="profile-card" id="github-card">
+      <h2 style="color: white;">🐙 GitHub Profile</h2>
+      <p id="gh-username">Loading...</p>
+      <p id="gh-repos">Loading...</p>
+      <p id="gh-followers">Loading...</p>
+      <p id="gh-stars">Loading...</p>
+      <p id="gh-contributions">Loading...</p>
+    </div>
+
+    <!-- LinkedIn Card -->
+    <div class="profile-card" id="linkedin-card">
+      <h2 style="color: white;">💼 LinkedIn Profile</h2>
+      <p id="li-name" style="font-weight:bold;">Md. Fahim Bhuiyan</p>
+      <p id="li-title">Software Engineer @ Grugate</p>
+      <p id="li-connection">🔗 500+ Connections</p>
+      <p id="li-skills">💡 Skills: Python, Django, Cybersecurity</p>
+    </div>
+  </div>
+</div>
+
+<script>
+  // LeetCode
+  async function loadLeetCode(username) {
+    try {
+      const res = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
+      const data = await res.json();
+      if (!data || !data.ranking) {
+        document.getElementById("lc-username").innerText = "❌ Username not found!";
+        return;
+      }
+      document.getElementById("lc-username").innerText = username;
+      document.getElementById("lc-rank").innerText = "🌍 Global Rank: " + (data.ranking ?? "N/A");
+      document.getElementById("lc-rating").innerText = "⭐ Contest Rating: " + (data.contestRating ?? "N/A");
+      document.getElementById("lc-total").innerText = "✅ Total Solved: " + (data.totalSolved ?? "0");
+      document.getElementById("lc-easy").innerText = "🟢 Easy: " + (data.easySolved ?? "0");
+      document.getElementById("lc-medium").innerText = "🟡 Medium: " + (data.mediumSolved ?? "0");
+      document.getElementById("lc-hard").innerText = "🔴 Hard: " + (data.hardSolved ?? "0");
+    } catch (err) {
+      document.getElementById("lc-username").innerText = "⚠️ Error loading data!";
+      console.error("LeetCode fetch error:", err);
+    }
+  }
+
+  // GitHub
+  async function loadGitHub(username) {
+    try {
+      const res = await fetch(`https://api.github.com/users/${username}`);
+      const data = await res.json();
+      if (!data || data.message === "Not Found") {
+        document.getElementById("gh-username").innerText = "❌ GitHub user not found!";
+        return;
+      }
+      document.getElementById("gh-username").innerText = data.login || username;
+      document.getElementById("gh-repos").innerText = "📦 Public Repos: " + (data.public_repos ?? "0");
+      document.getElementById("gh-followers").innerText = "👥 Followers: " + (data.followers ?? "0");
+      const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
+    const repos = await reposRes.json();
+    let totalStars = 0;
+    repos.forEach(repo => { totalStars += repo.stargazers_count; });
+
+    document.getElementById("gh-stars").innerText = "⭐ Stars Earned: " + totalStars;
+
+      document.getElementById("gh-contributions").innerText = "📊 Created: " + (data.created_at ? new Date(data.created_at).toLocaleDateString() : "N/A");
+    } catch (err) {
+      document.getElementById("gh-username").innerText = "⚠️ Error loading data!";
+      console.error("GitHub fetch error:", err);
+    }
+  }
+
+  // Initial load (replace usernames if needed)
+  loadLeetCode("fahimbhuiyanrinju");
+  loadGitHub("md-fahim-bhuiyan");
+</script>
+
+
+
   <section class="ftco-section ftco-no-pb goto-here" id="resume-section">
     <div class="container">
       <div class="row">
@@ -248,6 +396,9 @@
 
           </div>
           <div id="page-3" class="page three">
+
+
+
             <h2 class="heading">Skills</h2>
             <div class="row progress-circle mb-5">
               <div class="col-lg-4 mb-4">
@@ -377,10 +528,9 @@
               </div>
             </div>
           </div>
-          <div id="page-4" class="page four">
-            <h2 class="heading">Achievement</h2>
 
-            <div class="resume-wrap d-flex ftco-animate">
+
+            <!-- <div class="resume-wrap d-flex ftco-animate">
               <div class="icon d-flex align-items-center justify-content-center">
                 <span class="flaticon-ideas"></span>
               </div>
@@ -390,8 +540,11 @@
                 <span class="position">Online Programming Platform</span>
                 <p>Complated More than 800+ Programming</p>
               </div>
-            </div>
+            </div> -->
 
+   
+          <div id="page-4" class="page four">
+            <h2 class="heading">Achievement</h2>
             <div class="resume-wrap d-flex ftco-animate">
               <div class="icon d-flex align-items-center justify-content-center">
                 <span class="flaticon-ideas"></span>
@@ -748,7 +901,7 @@
       </div>
     </div>
   </section>
-<!-- 
+  <!-- 
   <div style="width: 97%; margin: auto;">
     <section class="ftco-section ftco-hireme img" style="background-image: url(images/bg_1.jpg) " >
       <div class="overlay" style="width: 50%;"></div>
