@@ -432,8 +432,6 @@ pre {
 .btn-action:hover{ border-color: rgba(124,108,255,.5); background: #0d1120; }
 .btn-live{ border-color: rgba(124,108,255,.5); box-shadow: 0 0 0 2px rgba(124,108,255,.15) inset; }
 
-/* Glow line */
-
 
 /* Responsive tweaks */
 @media (max-width: 1200px){ .project-card{ flex:1 1 calc(33.33% - 10.6px); } } /* 3 in row */
