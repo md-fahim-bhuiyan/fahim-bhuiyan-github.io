@@ -139,7 +139,6 @@
     padding: 20px 0;
     display: flex;
     justify-content: center;
-
   }
   .card-container {
     display: flex;
@@ -176,7 +175,6 @@
   .profile-card p { margin: 6px 0; font-size: 14px; }
   .profile-card hr { border:0; border-top:1px solid rgba(255,255,255,0.12); margin:10px 0; }
 
-  /* small responsive tweaks */
   @media (min-width: 960px) {
     .profile-card { max-width: 320px; }
   }
@@ -185,9 +183,11 @@
     .profile-card { max-width: 92%; }
   }
 </style>
+
 <h1 style="text-align:center; margin-top: 20px;">🚀 My Developer Footprint</h1>
 <div class="dev-cards-wrapper">
   <div class="card-container">
+
     <!-- LeetCode Card -->
     <div class="profile-card" id="leetcode-card">
       <h2 style="color: white;">⚡ LeetCode Profile</h2>
@@ -216,25 +216,26 @@
       <h2 style="color: white;">💼 LinkedIn Profile</h2>
       <p id="li-name" style="font-weight:bold;">Md. Fahim Bhuiyan</p>
       <p id="li-title">Software Engineer @ Grugate</p>
-      <p id="li-connection">🔗 500+ Connections</p>
-      <p id="li-connection">🏆 Projects: 10+
-
-</p>
+      <p id="li-connections">🔗 500+ Connections</p>
+      <p id="li-projects">🏆 Projects: 10+</p>
       <p id="li-skills">💡 Skills: Python, Django, Cybersecurity</p>
     </div>
+
   </div>
 </div>
 
 <script>
-  // LeetCode
+  // ✅ LeetCode (using working Vercel API)
   async function loadLeetCode(username) {
     try {
-      const res = await fetch(`https://leetcode-stats-api.herokuapp.com/${username}`);
+      const res = await fetch(`https://leetcode-api-faisalshohag.vercel.app/${username}`);
       const data = await res.json();
-      if (!data || !data.ranking) {
+
+      if (!data || !data.totalSolved) {
         document.getElementById("lc-username").innerText = "❌ Username not found!";
         return;
       }
+
       document.getElementById("lc-username").innerText = username;
       document.getElementById("lc-rank").innerText = "🌍 Global Rank: " + (data.ranking ?? "N/A");
       document.getElementById("lc-rating").innerText = "⭐ Contest Rating: " + (data.contestRating ?? "N/A");
@@ -248,36 +249,42 @@
     }
   }
 
-  // GitHub
+  // ✅ GitHub
   async function loadGitHub(username) {
     try {
       const res = await fetch(`https://api.github.com/users/${username}`);
       const data = await res.json();
+
       if (!data || data.message === "Not Found") {
         document.getElementById("gh-username").innerText = "❌ GitHub user not found!";
         return;
       }
+
       document.getElementById("gh-username").innerText = data.login || username;
       document.getElementById("gh-repos").innerText = "📦 Public Repos: " + (data.public_repos ?? "0");
       document.getElementById("gh-followers").innerText = "👥 Followers: " + (data.followers ?? "0");
+
+      // Count stars
       const reposRes = await fetch(`https://api.github.com/users/${username}/repos?per_page=100`);
-    const repos = await reposRes.json();
-    let totalStars = 0;
-    repos.forEach(repo => { totalStars += repo.stargazers_count; });
+      const repos = await reposRes.json();
+      let totalStars = 0;
+      repos.forEach(repo => { totalStars += repo.stargazers_count; });
+      document.getElementById("gh-stars").innerText = "⭐ Stars Earned: " + totalStars;
 
-    document.getElementById("gh-stars").innerText = "⭐ Stars Earned: " + totalStars;
-
-      document.getElementById("gh-contributions").innerText = "📊 Created: " + (data.created_at ? new Date(data.created_at).toLocaleDateString() : "N/A");
+      // Account created date
+      document.getElementById("gh-contributions").innerText =
+        "📊 Created: " + (data.created_at ? new Date(data.created_at).toLocaleDateString() : "N/A");
     } catch (err) {
       document.getElementById("gh-username").innerText = "⚠️ Error loading data!";
       console.error("GitHub fetch error:", err);
     }
   }
 
-  // Initial load (replace usernames if needed)
+  // ✅ Initial load (replace usernames if needed)
   loadLeetCode("md-fahim-bhuiyan");
   loadGitHub("md-fahim-bhuiyan");
 </script>
+
 
   <section class="ftco-section ftco-no-pb goto-here" id="resume-section">
     <div class="container">
