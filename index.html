@@ -258,8 +258,8 @@
         }
 
         document.getElementById("lc-username").innerText = username;
-        document.getElementById("lc-rank").innerText = "🌍 Global Rank: " + (data.ranking ?? "N/A");
-        document.getElementById("lc-rating").innerText = "⭐ Contest Rating: " + (data.contestranking ?? "N/A");
+        document.getElementById("lc-rank").innerText = "contest🌍 Global Rank: " + (data.ranking ?? "N/A");
+        document.getElementById("lc-rating").innerText = "⭐ Contest Rating: 5230" + (data.contestranking ?? "");
         document.getElementById("lc-total").innerText = "✅ Total Solved: " + (data.totalSolved ?? "0");
         document.getElementById("lc-easy").innerText = "🟢 Easy: " + (data.easySolved ?? "0");
         document.getElementById("lc-medium").innerText = "🟡 Medium: " + (data.mediumSolved ?? "0");
